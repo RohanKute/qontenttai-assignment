@@ -1,0 +1,26 @@
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const  {ApolloServer } = require('@apollo/server');
+const { expressMiddleware } = require('@apollo/server/express4');
+const { typeDefs } = require('./graphql/schema');
+const { resolvers } = require('./graphql/resolvers');
+require('dotenv').config();
+
+const startServer = async()=>{
+     const server = new ApolloServer({
+        typeDefs,
+        resolvers,
+     })
+     await server.start();
+     app.use(cors());
+     app.use(bodyParser.json());
+     app.use('/grapql', expressMiddleware(server , {
+        context: ({ req }) => ({ token: req.headers.authorization }),
+      }));
+     app.listen(3000, ()=>{
+         console.log('listening on port 3000');
+     })
+}
+startServer();

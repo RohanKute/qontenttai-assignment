@@ -1,6 +1,6 @@
 const typeDefs = `
     type User {
-        id: ID!
+        id: Int!
         username: String!
         email: String!
     }
@@ -25,3 +25,5 @@ const typeDefs = `
         login(input: LoginInput!): String
     }
 `;
+
+module.exports = { typeDefs };
