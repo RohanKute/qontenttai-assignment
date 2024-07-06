@@ -19,6 +19,7 @@ const startServer = async()=>{
      app.use('/grapql', expressMiddleware(server , {
         context: ({ req }) => ({ token: req.headers.authorization }),
       }));
+     app.use('/',(req,res)=>(res.send('Graphql server started')))
      app.listen(3000, ()=>{
          console.log('listening on port 3000');
      })
